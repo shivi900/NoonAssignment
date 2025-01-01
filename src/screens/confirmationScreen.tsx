@@ -1,50 +1,27 @@
 import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
+import { View, Text, TouchableOpacity, StyleSheet,Image } from 'react-native';
+// import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
 
 
 const ConfirmationScreen = ({ navigation }) => {
-  const scale = useSharedValue(0);
-  const opacity = useSharedValue(0);
 
-  useEffect(() => {
-    // Animate the image scaling
-    scale.value = withTiming(1, {
-      duration: 800,
-      easing: Easing.bounce,
-    });
-
-    // Animate the text opacity
-    opacity.value = withTiming(1, {
-      duration: 800,
-      delay: 400,
-    });
-  }, []);
-
-  const imageStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-  }));
-
-  const textStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-  }));
 
   return (
     <View style={styles.container}>
       {/* Animated Image */}
-      <Animated.Image
+      <Image
         source={require('../../assets/images/orderplaced.png')}
-        style={[styles.image, imageStyle]}
+        style={styles.image}
         resizeMode="contain"
       />
 
       {/* Animated Text */}
-      <Animated.View style={[styles.textContainer, textStyle]}>
+      <View style={styles.textContainer}>
         <Text style={styles.successText}>Order Placed Successfully!</Text>
         <Text style={styles.subText}>
           Thank you for shopping with us. Your order will be delivered soon.
         </Text>
-      </Animated.View>
+      </View>
 
       {/* Go to Home Button */}
       <TouchableOpacity
