@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import HomeScreen from '../screens/homescreen';
-import ProductDetails from '../screens/productDetails';
-import CartScreen from '../screens/cartScreen';
-import CartReviewScreen from '../screens/cartReviewScreen';
-import ConfirmationScreen from '../screens/confirmationScreen'
+import HomeScreen from '../screens/HomeScreen/homescreen';
+import ProductDetails from '../screens/ProductDetailScreen/productDetails';
+import CartScreen from '../screens/CartScreen/cartScreen';
+import CartReviewScreen from '../screens/CartReviewScreen/cartReviewScreen';
+import ConfirmationScreen from '../screens/ConfirmationScreen/confirmationScreen'
 
 const Stack = createStackNavigator();
 
