@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 const useHomeScreen = () => {
@@ -7,8 +7,9 @@ const useHomeScreen = () => {
   const [searchText, setSearchText] = useState('');
   const [banners, setBanners] = useState([]);
   const cart = useSelector((state) => state.cart.cart);
+  const [refreshing, setRefreshing] = useState(false);
 
-  // Fetch products and banners from the API
+  
   const fetchProductsAndBanners = async () => {
     try {
       const response = await fetch('https://dummyjson.com/products');
@@ -16,19 +17,31 @@ const useHomeScreen = () => {
       setProducts(data.products);
       setFilteredProducts(data.products);
 
-      // Create banners dynamically for each category
-      const categories = [...new Set(data.products.map((item) => item.category))]; // Unique categories
+     
+      const categories = [...new Set(data.products.map((item) => item.category))]; 
       const bannersData = categories.map((category) => {
         const firstProduct = data.products.find((item) => item.category === category);
-        return firstProduct; // First product of each category
+        return firstProduct; 
       });
       setBanners(bannersData);
     } catch (error) {
       console.error('Error fetching products and banners:', error);
     }
   };
+  
 
-  // Handle search functionality
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    try {
+      await fetchProductsAndBanners(); 
+    } catch (error) {
+      console.error('Error refreshing products:', error);
+    } finally {
+      setRefreshing(false);
+    }
+  }, [fetchProductsAndBanners]);
+
+ 
   const handleSearch = (text) => {
     setSearchText(text);
     if (text) {
@@ -50,8 +63,10 @@ const useHomeScreen = () => {
     filteredProducts,
     searchText,
     cart,
-    banners, // Return banners for use in the component
+    banners, 
     handleSearch,
+    onRefresh,
+    refreshing
   };
 };
 

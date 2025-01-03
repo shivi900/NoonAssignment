@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  RefreshControl
 } from 'react-native';
 import useHomeScreen from '../../hooks/useHomeScreen';
 import styles from './styles'
@@ -13,7 +14,7 @@ import styles from './styles'
 
 
 const HomeScreen = ({ navigation }) => {
-  const { filteredProducts, searchText, cart, handleSearch,banners } = useHomeScreen();
+  const { filteredProducts, searchText, cart, handleSearch,refreshing,onRefresh } = useHomeScreen();
   
 
   const renderProductItem = ({ item }) => (
@@ -72,6 +73,9 @@ const HomeScreen = ({ navigation }) => {
         columnWrapperStyle={{ justifyContent: 'space-between' }}
      
         contentContainerStyle={styles.listContent}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     </View>
   );
